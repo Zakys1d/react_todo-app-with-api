@@ -23,15 +23,6 @@
     text-rendering: optimizeLegibility;
   }
 
-  &__new-todo {
-  outline: none;
-
-  &:focus {
-    outline: none;
-    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
-    border: 2px solid #000000;
-  }
-}
 
   &__header {
     position: relative;
@@ -68,7 +59,7 @@
     }
   }
 
-  &__new-todo {
+    &__new-todo {
     box-sizing: border-box;
     width: 100%;
     padding: 16px 16px 16px 60px;
@@ -78,13 +69,14 @@
     font-family: inherit;
     font-weight: inherit;
     color: inherit;
+    outline: none;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
     border: none;
-    background: rgba(0, 0, 0, 0.003);
-    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0);
+    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0);
 
     &::placeholder {
       font-style: italic;
