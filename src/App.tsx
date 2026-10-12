@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable max-len */
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Todo } from './types/Todo';
 import { ErrorMessage } from './types/ErrorMessage';
@@ -401,42 +402,11 @@ export const App: React.FC = () => {
 
   return (
     <div className="todoapp">
-      <header className="todoapp__header">
-        <h1 className="todoapp__title">todos</h1>
+      <h1 className="todoapp__title">todos</h1>
 
-        <form
-          onSubmit={async event => {
-            event.preventDefault();
-
-            const input = inputRef.current;
-
-            if (!input || isAdding) {
-              return;
-            }
-
-            const added = await handleAdd(input.value);
-
-            if (added) {
-              input.value = '';
-            }
-          }}
-        >
-          <input
-            ref={inputRef}
-            data-cy="NewTodoField"
-            type="text"
-            className="todoapp__new-todo"
-            placeholder="What needs to be done?"
-            disabled={isAdding}
-          />
-        </form>
-      </header>
-
-      {isLoading ? (
-        <div className="loader" data-cy="Loader" />
-      ) : (
-        <>
-          {todos.length > 0 && (
+      <div className="todoapp__content">
+        <header className="todoapp__header">
+          {todos.length > 0 && !isLoading && (
             <button
               type="button"
               className={`todoapp__toggle-all ${allCompleted ? 'active' : ''}`}
@@ -447,28 +417,61 @@ export const App: React.FC = () => {
             />
           )}
 
-          {todos.length > 0 && (
-            <TodoList
-              todos={visibleTodos}
-              deletingTodoIds={deletingTodoIds}
-              updatingTodoIds={updatingTodoIds}
-              onDelete={handleDelete}
-              onToggle={handleToggle}
-              onRename={handleRename}
-            />
-          )}
+          <form
+            onSubmit={async event => {
+              event.preventDefault();
 
-          {todos.length > 0 && (
-            <TodoFooter
-              todos={todosForFooter}
-              filter={filter}
-              deletingTodoIds={deletingTodoIds}
-              isClearingCompleted={isClearingCompleted}
-              onClearCompleted={handleClearCompleted}
+              const input = inputRef.current;
+
+              if (!input || isAdding) {
+                return;
+              }
+
+              const added = await handleAdd(input.value);
+
+              if (added) {
+                input.value = '';
+              }
+            }}
+          >
+            <input
+              ref={inputRef}
+              data-cy="NewTodoField"
+              type="text"
+              className="todoapp__new-todo"
+              placeholder="What needs to be done?"
+              disabled={isAdding}
             />
-          )}
-        </>
-      )}
+          </form>
+        </header>
+
+        {isLoading ? (
+          <div className="loader" data-cy="Loader" />
+        ) : (
+          <>
+            {todos.length > 0 && (
+              <TodoList
+                todos={visibleTodos}
+                deletingTodoIds={deletingTodoIds}
+                updatingTodoIds={updatingTodoIds}
+                onDelete={handleDelete}
+                onToggle={handleToggle}
+                onRename={handleRename}
+              />
+            )}
+
+            {todos.length > 0 && (
+              <TodoFooter
+                todos={todosForFooter}
+                filter={filter}
+                deletingTodoIds={deletingTodoIds}
+                isClearingCompleted={isClearingCompleted}
+                onClearCompleted={handleClearCompleted}
+              />
+            )}
+          </>
+        )}
+      </div>
 
       <ErrorNotification error={error} onClose={clearError} />
     </div>
